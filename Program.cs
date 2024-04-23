@@ -1,8 +1,16 @@
 ﻿using System;
+using System.Globalization;
 
 class Program
 {
     static void Main(string[] args) {
+        const char ConwertRuToUsd = '1';
+        const char ConwertUsdToRu = '2';
+        const char ConwertEuroToUsd = '3';
+        const char ConwertUsdToEuro = '4';
+        const char ConwertRuToEuro = '5';
+        const char ConwertEuroToRu = '6';
+        const char Exit = 'S';
         float ballanseRu = 1000.0f;
         float ballanseUsd = 1000.0f;
         float ballanseEuro = 1000.0f;
@@ -12,106 +20,98 @@ class Program
         float courseUsdToEuro = 2.0f;
         float courseRuToEuro = 200.0f;
         float courseEuroToRu = 0.005f;
-        int directionConvert;
+        char directionConvert;
         float summa;
-        float newMony;
         bool isWork = true;
 
         while (isWork)
         {
-            Console.WriteLine("Направление конвертации: 1- Ru>>Usd; 2- Usd>>Ru");
-            Console.WriteLine("Направление конвертации: 3- Euro>>Usd; 4- Usd>>Euro");
-            Console.WriteLine("Направление конвертации: 5- Ru>>Euro; 6- Euro>>Ru");
+            Console.WriteLine($"Направление конвертации: {ConwertRuToUsd}- Ru>>Usd; {ConwertUsdToRu}- Usd>>Ru");
+            Console.WriteLine($"Направление конвертации: {ConwertEuroToUsd}- Euro>>Usd; {ConwertUsdToEuro}- Usd>>Euro");
+            Console.WriteLine($"Направление конвертации: {ConwertRuToEuro}- Ru>>Euro; {ConwertEuroToRu}- Euro>>Ru");
+            Console.WriteLine($"Продолжить конвертацию: любой символ; {Exit} - остановить ");
             Console.WriteLine();
             Console.WriteLine($"Баланс до конвертации: Ru {ballanseRu}, Usd {ballanseUsd}, Euro {ballanseEuro}");
-            Console.Write("Выберите направление конвертации: ");
-            directionConvert = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Выберите действие: ");
+            directionConvert = Char.ToUpper(Convert.ToChar(Console.ReadLine()));
             Console.Write("Выберите сумму конвертации: ");
             summa = Convert.ToSingle(Console.ReadLine());
 
             switch (directionConvert)
             {
-                case 1://Ru>>Usd
+                case Exit:
+                    isWork = false;
+                    break;
 
+                case ConwertRuToUsd:
                     if (summa > ballanseRu)
                     {
                         Console.WriteLine("Недостаточно средств");
                         break;
                     }
 
-                    newMony = summa / courseRuToUsd;
                     ballanseRu -= summa;
-                    ballanseUsd += newMony;
+                    ballanseUsd += summa / courseRuToUsd;
                     break;
-                case 2://Usd>>Ru
 
+                case ConwertUsdToRu:
                     if (summa > ballanseUsd)
                     {
                         Console.WriteLine("Недостаточно средств");
                         break;
                     }
 
-                    newMony = summa / courseUsdToRu;
                     ballanseUsd -= summa;
-                    ballanseRu += newMony;
+                    ballanseRu += summa / courseUsdToRu;
                     break;
-                case 3://Euro>>Usd
 
+                case ConwertEuroToUsd:
                     if (summa > ballanseEuro)
                     {
                         Console.WriteLine("Недостаточно средств");
                         break;
                     }
 
-                    newMony = summa / courseEuroToUsd;
                     ballanseEuro -= summa;
-                    ballanseUsd += newMony;
+                    ballanseUsd += summa / courseEuroToUsd;
                     break;
-                case 4://Usd>>Euro
 
+                case ConwertUsdToEuro:
                     if (summa > ballanseUsd)
                     {
                         Console.WriteLine("Недостаточно средств");
                         break;
                     }
 
-                    newMony = summa / courseUsdToEuro;
                     ballanseUsd -= summa;
-                    ballanseEuro += newMony;
+                    ballanseEuro += summa / courseUsdToEuro;
                     break;
-                case 5://Ru>>Euro
 
+                case ConwertRuToEuro:
                     if (summa > ballanseRu)
                     {
                         Console.WriteLine("Недостаточно средств");
                         break;
                     }
 
-                    newMony = summa / courseRuToEuro;
                     ballanseRu -= summa;
-                    ballanseEuro += newMony;
+                    ballanseEuro += summa / courseRuToEuro;
                     break;
-                case 6://Euro>>Ru
 
+                case ConwertEuroToRu:
                     if (summa > ballanseEuro)
                     {
                         Console.WriteLine("Недостаточно средств");
                         break;
                     }
 
-                    newMony = summa / courseEuroToRu;
                     ballanseEuro -= summa;
-                    ballanseRu += newMony;
+                    ballanseRu += summa / courseEuroToRu;
                     break;
             }
 
             Console.WriteLine($"Баланс после конвертации: Ru {ballanseRu}, Usd {ballanseUsd}, Euro {ballanseEuro}");
             Console.WriteLine("Продолжим конвертацию?");
-            Console.Write("Продолжить - любой символ, остановить - s: ");
-
-            if (Convert.ToChar(Console.ReadLine()) == 's')
-                isWork = false;
-
             Console.WriteLine();
         }
     }
